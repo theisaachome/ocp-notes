@@ -21,12 +21,48 @@
 - Created through a mechanism based on the interface.
 
 ```java
-@interface MyAnno{
-	String str();
-	int num();
+<modifiers> @ interface <annotation-type-name> {
+    // Annotation type body goes here
+}
+```
+### **Example**
+```java
+public @interface Version {
+    int major();
+    int minor();
+}
+```
+**Note** 
+- Although it is allowed to declare static and default methods in interface types,
+- they are not allowed in annotation types.
+---
+
+## **How do you use an annotation type?**
+```java
+@annotationType(name1=value1, name2=value2, names3=values3...)
+```
+### The following is an instance of your Version annotation type:
+```java
+@Version(major=1, minor=0)
+public class MyClass{}
+```
+---
+
+##  Style #1
+```java
+@Version(major=1, minor=0) 
+public class VersionTest {
+        // Code goes here
 }
 ```
 
+##  Style #2
+```java
+public @Version(major=1, minor=0) 
+class VersionTest {
+// Code goes here
+}
+```
 ## **Specifying a Retention Policy**
 
 - A retention policy determines at what point an annotation is discarded.
