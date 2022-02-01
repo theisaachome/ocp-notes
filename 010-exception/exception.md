@@ -120,17 +120,38 @@ finally {
 
 ##  Checked Vs Unchecked Exceptions
 ### Checked Exception
-- The classes that directly inherit the Throwable class except RuntimeException and Error are known as checked exceptions.
-- For example, IOException, SQLException, etc. Checked exceptions are checked at compile-time.
+- Checked exceptions are unacceptable conditions that a programmer foresees at the time of writing a method.
 
-### Unchecked Exception
-- The classes that inherit the RuntimeException are known as unchecked exceptions.
-- For example, ArithmeticException, NullPointerException, ArrayIndexOutOfBoundsException, etc.
-- Unchecked exceptions are not checked at compile-time, but they are checked at runtime.
+- For an example, FileNotFoundException is a checked exception.
+
+- Checked exceptions are so named because they’re checked during compilation.
+
+- If a method call throws a checked exception, the compiler checks and ensures that the calling method is either handling the exception or declaring it to be rethrown.
+
+
+### **`Runtime exceptions`**
+
+- A runtime exception is a representation of a programming error. These occur from inappropriate use of a piece of code.
+	- For example, `NullPointerException`
+-  A runtime exception is a subclass of java.lang.RuntimeException.
+
+- Together, runtime exceptions and errors are referred to as unchecked exceptions.
+
+- ### Unchecked Exception
+
+	- Unchecked exceptions = Runtime exception + Errors
+
+	- For example, ArithmeticException, NullPointerException, ArrayIndexOutOfBoundsException, etc.
+
+	- Unchecked exceptions are not checked at compile-time, but they are checked at runtime.
+
 
 ### Error
-- Error is irrecoverable. Some example of errors are OutOfMemoryError, VirtualMachineError, AssertionError etc..
 
+-  When the JVM throws errors these errors are considered to be serious exceptional conditions and they can’t be directly controlled by your code.
+- `For example:`
+	- NoClassDefFoundError 
+	- StackOverflowError 
 --- 
 
 ## **`The default exception handler`**
@@ -150,7 +171,16 @@ System.out.println(a);
 
 ## **Using `try and catch`**
 
-- A `try` and its `catch` statement form a unit.
+
+### **`Try what?`**
+- First, you try to execute your code. If it doesn’t execute as planned, you handle the exceptional conditions using a catch block.
+### **`Catch what?`**
+- You catch the exceptional event arising from the code enclosed within the try block and handle the event by defining appropriate exception handlers.
+
+### **`What does finally do?`**
+- Finally, you execute a set of code, in all conditions, regardless of whether the code in the try block throws any exceptions.
+
+
 
 - The scope of the `catch` clause is restricted to those statements specified by the immediately preceding `try` statement.
 - A `catch` statement cannot catch an exception thrown by another try statement.
@@ -205,7 +235,9 @@ try {
 
 ## **Multiple `catch` Clauses**
 
+
 - You can specify two or more catch clauses, each catching a different type of exception.
+
 
 ```java 
 try{    
@@ -217,7 +249,9 @@ catch(ArrayIndexOutOfBoundsException e){ }
 catch(Exception e) { }             
 System.out.println("rest of the code");    
 ```
+
 - Each catch statement is inspected in order, and the first one whose type matches that of the exception is executed.
+
 
 ```java
 try{    
@@ -232,8 +266,8 @@ catch(ArrayIndexOutOfBoundsException e)  {
 catch(Exception e) {  
     System.out.println("Parent Exception occurs");}
 ```
-- If didn't provide the corresponding exception type.
-- In such case, the catch block containing the parent exception class Exception will invoked.
+
+- If didn't provide the corresponding exception type the catch block containing the parent exception class Exception will invoked.
 
 ```java 
 try{    
@@ -347,6 +381,7 @@ public static void doMath(int ...args) {
 ---
 
 ## **Java finally block**
+
 - Java finally block is a block used to execute important code such as closing the connection, etc.
 
 - Java finally block is always executed whether an exception is handled or not.
@@ -412,9 +447,27 @@ finally {
 }
 ```
 
+- If both the catch and finally blocks define return statements, the calling method will receive a value from the finally block.
+
+- the following snippet get 20 from finally block.
+```java
+try{    
+	String[] students = {"Harry", "Paul"};
+	System.out.println(students[5]);
+}
+catch(Exception e){  return 10;}
+finally {  	return 20; }
+```
+
+
+- If a catch block returns a primitive data type, the finally block can’t modify the value being returned by it.
+-  If a catch block returns an object, the finally block can modify the state of the object being returned by it.
+
 ----
 
 ## **`Java throw keyword`**
+
+- The `throw` statement is used to throw an instance of Exception Object.
 
 - Your program can throw an exception explicitly, using the `throw` statement. 
 
@@ -470,7 +523,10 @@ try {
 ----
 ## **`Java a throws keyword`**
 
+-  The `throws` statement is used in the declaration of the method to signal that it can throw Exception Object.
+
 - If a method is capable of causing an exception that it does not handle,
+
 - it must specify this behavior so that callers of the method can guard themselves against that exception.
 
 ### how ?
